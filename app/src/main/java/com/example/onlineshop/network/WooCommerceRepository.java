@@ -76,6 +76,7 @@ public class WooCommerceRepository {
                             mostPopularProductsLiveData.setValue(orderedProducts);
                             break;
                         case "rating":
+                            Log.d(TAG , "in on response rating");
                             bestProductsLiveData.setValue(orderedProducts);
                             break;
                     }
@@ -89,16 +90,21 @@ public class WooCommerceRepository {
         });
     }
 
+    public void fetchSpecificProducts(){
+        fetchSpecificTypeOfProductsAsync("date");
+        fetchSpecificTypeOfProductsAsync("popularity");
+        fetchSpecificTypeOfProductsAsync("rating");
+    }
+
     public void fetchAllProductAsync(){
         Call<List<Product>> call = mIwooCommerceService.getProductList(mProductQueries);
-                call.enqueue(getRetrofitCallBack());
+        call.enqueue(getRetrofitCallBack());
     }
 
     private Callback <List<Product>> getRetrofitCallBack(){
         return new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-
                 if(response.isSuccessful()) {
                     List <Product> products = response.body();
                     //iProductFetcherCallback.setAdapterOnResponse(products);
@@ -107,24 +113,23 @@ public class WooCommerceRepository {
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-
                 Log.e(TAG, t.getMessage(), t);
             }
         };
     }
 
     public MutableLiveData<List<Product>> getLatestProductLiveData() {
-        fetchSpecificTypeOfProductsAsync("date");
+//        fetchSpecificTypeOfProductsAsync("date");
         return latestProductLiveData;
     }
 
     public MutableLiveData<List<Product>> getBestProductsLiveData() {
-        fetchSpecificTypeOfProductsAsync("rating");
+//        fetchSpecificTypeOfProductsAsync("rating");
         return bestProductsLiveData;
     }
 
     public MutableLiveData<List<Product>> getMostPopularProductsLiveData() {
-        fetchSpecificTypeOfProductsAsync("popularity");
+//        fetchSpecificTypeOfProductsAsync("popularity");
         return mostPopularProductsLiveData;
     }
 }

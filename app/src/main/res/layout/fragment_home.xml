@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.HomeFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layoutDirection="rtl">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -37,7 +38,7 @@
         />
 
     <TextView
-        android:text="latest"
+        android:text="@string/tv_text_latestProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
@@ -49,7 +50,7 @@
 
 
     <TextView
-        android:text="best"
+        android:text="@string/tv_text_bestProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
@@ -60,7 +61,7 @@
         android:orientation="horizontal"/>
 
     <TextView
-        android:text="popular"
+        android:text="@string/tv_text_mostPopularProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
