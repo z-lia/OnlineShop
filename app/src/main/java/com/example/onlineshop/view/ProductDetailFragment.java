@@ -26,10 +26,10 @@ public class ProductDetailFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ProductDetailFragment newInstance(Product product) {
+    public static ProductDetailFragment newInstance(int productId) {
 
         Bundle args = new Bundle();
-    args.putSerializable(ARGS_PRODUCT , product);
+        args.putInt(ARGS_PRODUCT , productId);
         ProductDetailFragment fragment = new ProductDetailFragment();
         fragment.setArguments(args);
         return fragment;

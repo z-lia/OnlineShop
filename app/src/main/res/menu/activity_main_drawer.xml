@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single" android:id="@+id/group_1">
+        <item
+            android:id="@+id/nav_menu_home"
+            android:icon="@drawable/ic_menu_home"
+            android:title="@string/home" />
+
+        <item
+            android:id="@+id/nav_menu_product_category"
+            android:icon="@drawable/ic_menu_product_list_format"
+            android:title="@string/product_category" />
+
+    </group>
+
+
+    <group android:checkableBehavior="single" android:id="@+id/group_2">
+        <item
+            android:id="@+id/nav_menu_shopping_cart"
+            android:icon="@drawable/ic_menu_add_shopping"
+            android:title="@string/shopping_cart" />
+    </group>
+
+    <group android:checkableBehavior="single" android:id="@+id/group_3">
+        <item
+            android:id="@+id/nav_menu_most_visited_products"
+            android:icon="@drawable/ic_star"
+            android:title="@string/most_visited" />
+        <item
+            android:id="@+id/nav_menu_latest_products"
+            android:icon="@drawable/ic_star"
+            android:title="@string/latest_products" />
+        <item
+            android:id="@+id/nav_menu_popular_products"
+            android:icon="@drawable/ic_menu_product_list_format"
+            android:title="@string/best_products" />
+        <item
+            android:id="@+id/nav_menu_suggest"
+            android:icon="@drawable/ic_star"
+            android:title="@string/suggest" />
+    </group>
+
+
+</menu>
