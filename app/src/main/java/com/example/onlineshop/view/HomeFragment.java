@@ -4,6 +4,7 @@ package com.example.onlineshop.view;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import androidx.lifecycle.Observer;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.RecyclerAdapter;
+import com.example.onlineshop.databinding.FragmentHomeBinding;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.viewmodel.HomeViewModel;
 
@@ -30,13 +32,15 @@ import java.util.List;
 public class HomeFragment extends Fragment  {
 
     private HomeViewModel mHomeViewModel;
-    private RecyclerView mRecyclerViewBestProducts;
+    private FragmentHomeBinding mBinding;
+
+    //private RecyclerView mRecyclerViewBestProducts;
     private RecyclerAdapter mRecyclerAdapterBestProducts;
 
-    private RecyclerView mRecyclerViewLatestProducts;
+    //private RecyclerView mRecyclerViewLatestProducts;
     private RecyclerAdapter mRecyclerAdapterLatestProducts;
 
-    private RecyclerView mRecyclerViewMostPopularProducts;
+    //private RecyclerView mRecyclerViewMostPopularProducts;
     private RecyclerAdapter mRecyclerAdapterPopularProducts;
 
     public HomeFragment() {
@@ -85,31 +89,32 @@ public class HomeFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        //View view = inflater.inflate(R.layout.fragment_home, container, false);
+        mBinding = DataBindingUtil.inflate(inflater , R.layout.fragment_home, container, false);
 
-        initUI(view);
+        initUI();
 
-        return view;
+        return mBinding.getRoot();
     }
 
-    private void initUI(View view) {
-        mRecyclerViewBestProducts = view.findViewById(R.id.recycler_view_bestProducts);
-        mRecyclerViewLatestProducts = view.findViewById(R.id.recycler_view_LatestProducts);
-        mRecyclerViewMostPopularProducts = view.findViewById(R.id.recycler_view_popularProducts);
+    private void initUI() {
+//        mRecyclerViewBestProducts = view.findViewById(R.id.recycler_view_bestProducts);
+//        mRecyclerViewLatestProducts = view.findViewById(R.id.recycler_view_LatestProducts);
+//        mRecyclerViewMostPopularProducts = view.findViewById(R.id.recycler_view_popularProducts);
 
-        mRecyclerViewLatestProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mBinding.recyclerViewLatestProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        mRecyclerViewBestProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mBinding.recyclerViewBestProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 //        mRecyclerAdapterBestProducts = new RecyclerAdapter(mHomeViewModel.getBestProductsLiveData().getValue(), getContext());
 //        mRecyclerViewBestProducts.setAdapter(mRecyclerAdapterBestProducts);
 
-        mRecyclerViewMostPopularProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mBinding.recyclerViewPopularProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void setUpAdapterBest(List<Product> products) {
         if (mRecyclerAdapterBestProducts == null) {
             mRecyclerAdapterBestProducts = new RecyclerAdapter(mHomeViewModel.getBestProductsLiveData().getValue(), getContext());
-            mRecyclerViewBestProducts.setAdapter(mRecyclerAdapterBestProducts);
+            mBinding.recyclerViewBestProducts.setAdapter(mRecyclerAdapterBestProducts);
         } else {
             mRecyclerAdapterBestProducts.setProductList(products);
             mRecyclerAdapterBestProducts.notifyDataSetChanged();
@@ -119,7 +124,7 @@ public class HomeFragment extends Fragment  {
     private void setupAdapterLatest(List<Product> products) {
         if (mRecyclerAdapterLatestProducts == null) {
             mRecyclerAdapterLatestProducts = new RecyclerAdapter(mHomeViewModel.getLatestProductLiveData().getValue(), getContext());
-            mRecyclerViewLatestProducts.setAdapter(mRecyclerAdapterLatestProducts);
+            mBinding.recyclerViewLatestProducts.setAdapter(mRecyclerAdapterLatestProducts);
         } else {
             mRecyclerAdapterLatestProducts.setProductList(products);
             mRecyclerAdapterLatestProducts.notifyDataSetChanged();
@@ -129,7 +134,7 @@ public class HomeFragment extends Fragment  {
     private void setUpAdapterMostPopular(List<Product> products) {
         if (mRecyclerAdapterPopularProducts == null) {
             mRecyclerAdapterPopularProducts = new RecyclerAdapter(mHomeViewModel.getMostPopularProductsLiveData().getValue(), getContext());
-            mRecyclerViewMostPopularProducts.setAdapter(mRecyclerAdapterPopularProducts);
+            mBinding.recyclerViewPopularProducts.setAdapter(mRecyclerAdapterPopularProducts);
         } else {
             mRecyclerAdapterPopularProducts.setProductList(products);
             mRecyclerAdapterPopularProducts.notifyDataSetChanged();

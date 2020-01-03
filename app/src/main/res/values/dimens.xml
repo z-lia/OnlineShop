@@ -2,4 +2,6 @@
 <resources>
     <dimen name="margin_text">20dp</dimen>
     <dimen name="navigation_header_hight">100dp</dimen>
+    <dimen name="padding_nav_header">16dp</dimen>
+    <dimen name="button_width">200dp</dimen>
 </resources>

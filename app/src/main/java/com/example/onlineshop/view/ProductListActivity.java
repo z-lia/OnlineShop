@@ -10,6 +10,9 @@ import android.os.Bundle;
 import com.example.onlineshop.R;
 
 public class ProductListActivity extends SingleFragmentActivity {
+    public static final String LATEST_PRODUCT ="latest_product";
+    public static final String MOST_VISIT_PRODUCT ="most_visit_product";
+    public static final String POPULAR_PRODUCT ="popular_product";
 
     @Override
     public Fragment createFragment() {
@@ -17,7 +20,7 @@ public class ProductListActivity extends SingleFragmentActivity {
     }
 
 
-    public static Intent newIntent(Context context , int productId){
+    public static Intent newIntent(Context context , String productListType){
         Intent intent = new Intent(context, ProductListActivity.class);
         return intent;
     }

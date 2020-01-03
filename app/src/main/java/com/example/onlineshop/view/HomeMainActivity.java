@@ -5,8 +5,10 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -29,6 +31,7 @@ public class HomeMainActivity extends SingleFragmentActivity {
 
          mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+        ViewCompat.setLayoutDirection(mBinding.drawerLayout, ViewCompat.LAYOUT_DIRECTION_RTL);
         setNavigationDrawer();
         mBinding.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -51,12 +54,6 @@ public class HomeMainActivity extends SingleFragmentActivity {
             }
         });
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
-        if (fragment == null)
-            fragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, createFragment())
-                    .commit();
     }
 
     private void setNavigationDrawer() {

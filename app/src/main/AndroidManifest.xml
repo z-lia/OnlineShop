@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.onlineshop">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.ProductListActivity"></activity>
+        <activity android:name=".view.NoInternetActivity"></activity>
+        <activity android:name=".view.ProductListActivity" />
         <activity
             android:name=".view.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -23,7 +25,7 @@
         </activity>
         <activity android:name=".view.SingleFragmentActivity" />
         <activity android:name=".view.ProductDetailActivity" />
-        <activity android:name=".view.HomeMainActivity"></activity>
+        <activity android:name=".view.HomeMainActivity" />
     </application>
 
 </manifest>

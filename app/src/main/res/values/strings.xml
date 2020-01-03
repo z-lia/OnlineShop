@@ -19,6 +19,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="all_list">لیست کامل</string>
+    <string name="network_connection_error">خطا در اتصال به اینترنت!</string>
+    <string name="check_network_setting">بررسی تنظیمات شبکه</string>
+    <string name="try_again">تلاش مجدد</string>
 
 
 </resources>

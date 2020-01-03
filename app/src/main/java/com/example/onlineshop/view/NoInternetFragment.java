@@ -13,27 +13,27 @@ import com.example.onlineshop.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductListFragment extends Fragment {
+public class NoInternetFragment extends Fragment {
 
-
-    public ProductListFragment() {
-        // Required empty public constructor
-    }
-
-    public static ProductListFragment newInstance() {
+    public static NoInternetFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        ProductListFragment fragment = new ProductListFragment();
+        NoInternetFragment fragment = new NoInternetFragment();
         fragment.setArguments(args);
         return fragment;
     }
+
+    public NoInternetFragment() {
+        // Required empty public constructor
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product_list, container, false);
+        return inflater.inflate(R.layout.fragment_no_internet, container, false);
     }
 
 }
