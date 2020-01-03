@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment  {
+public class HomeFragment extends ConnectionFragment  {
 
     private HomeViewModel mHomeViewModel;
     private FragmentHomeBinding mBinding;

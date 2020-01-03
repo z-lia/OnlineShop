@@ -16,7 +16,7 @@ import com.example.onlineshop.model.Product;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductDetailFragment extends Fragment {
+public class ProductDetailFragment extends ConnectionFragment {
 
 
     private static final String ARGS_PRODUCT = "product";

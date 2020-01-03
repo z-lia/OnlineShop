@@ -13,7 +13,7 @@ import com.example.onlineshop.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductListFragment extends Fragment {
+public class ProductListFragment extends ConnectionFragment {
 
 
     public ProductListFragment() {
