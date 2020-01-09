@@ -13,15 +13,17 @@ public class ProductListActivity extends SingleFragmentActivity {
     public static final String LATEST_PRODUCT ="latest_product";
     public static final String MOST_VISIT_PRODUCT ="most_visit_product";
     public static final String POPULAR_PRODUCT ="popular_product";
+    public static final String PRODUCT_LIST_TYPE ="com.example.onlineshop.productListType";
 
     @Override
     public Fragment createFragment() {
-        return null;
+        return ProductListFragment.newInstance(getIntent().getStringExtra(PRODUCT_LIST_TYPE));
     }
 
 
     public static Intent newIntent(Context context , String productListType){
         Intent intent = new Intent(context, ProductListActivity.class);
+        intent.putExtra(PRODUCT_LIST_TYPE , productListType);
         return intent;
     }
 //

@@ -13,15 +13,19 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface IWooCommerceService {
-    @GET("products/?")
+    @GET("products")
     Call <List<Product>> getProductList(@QueryMap Map<String, String> queries);
 
-    @GET("products/?")
+    @GET("products")
     Call <List<Product>> getLatestProducts(@QueryMap Map<String, String> productQueries );
 
-    @GET("products/products/categories/?")
+    @GET("products/categories")
     Call <List<CategoriesItem>> getAllCategories(@QueryMap Map<String, String> productQueries );
 
-    @GET("products/{id}/?")
-    Call <Product> getProduct(@Path("id")int productId , @QueryMap Map<String, String> productQueries );
+    @GET("products/{id}")
+    Call <Product> getProductByID(@Path("id")int productId , @QueryMap Map<String, String> productQueries );
+
+    @GET("products/categories/{id}")
+    Call <List<Product>> getProductsOfCategoryById( @Path("id") int categoryId ,@QueryMap Map<String, String> queries );
+
 }

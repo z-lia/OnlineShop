@@ -30,7 +30,7 @@ public class ConnectionFragment extends Fragment {
         if (!NetworkHelper.isConnected(getActivity())) {
             Intent intent = NoInternetActivity.newIntent(getActivity());
             startActivity(intent);
-            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+            getActivity().finish();
         }
     }
 

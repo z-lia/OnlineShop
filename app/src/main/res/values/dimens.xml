@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin_text">20dp</dimen>
+    <dimen name="margin_layout">20dp</dimen>
+    <dimen name="padding_tv_categories_home">10dp</dimen>
+    <dimen name="padding_card_view">4dp</dimen>
+    <dimen name="margin_tv_categories_home">5dp</dimen>
+    <dimen name="margin_low_layout">10dp</dimen>
     <dimen name="navigation_header_hight">100dp</dimen>
     <dimen name="padding_nav_header">16dp</dimen>
     <dimen name="button_width">200dp</dimen>

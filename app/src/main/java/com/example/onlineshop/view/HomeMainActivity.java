@@ -1,5 +1,6 @@
 package com.example.onlineshop.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -45,8 +46,15 @@ public class HomeMainActivity extends SingleFragmentActivity {
                         break;
 
                     case R.id.nav_menu_latest_products:
+                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this ,ProductListActivity.LATEST_PRODUCT ));
                         break;
+
                     case R.id.nav_menu_most_visited_products:
+                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this ,ProductListActivity.MOST_VISIT_PRODUCT ));
+                        break;
+
+                    case R.id.nav_menu_popular_products:
+                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this ,ProductListActivity.POPULAR_PRODUCT ));
                         break;
 
                 }

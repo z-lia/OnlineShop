@@ -20,21 +20,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="category" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_categuriess"
+                android:id="@+id/recycler_view_categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="all" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_products"
@@ -45,12 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="latest" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_text"
+                android:layout_margin="@dimen/margin_low_layout"
                 android:text="@string/latest_products" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -63,7 +50,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/margin_low_layout">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,7 +62,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:text="@string/all_list" />
+                    android:text="@string/all_list"
+                    android:linksClickable="true" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -86,7 +75,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/margin_low_layout">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,7 +85,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:text="@string/all_list" />
+                    android:text="@string/all_list"
+                    android:linksClickable="true"/>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

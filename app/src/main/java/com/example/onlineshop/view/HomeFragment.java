@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.onlineshop.R;
-import com.example.onlineshop.RecyclerAdapter;
+import com.example.onlineshop.model.CategoriesItem;
+import com.example.onlineshop.view.adapter.CategoryRecyclerAdapter;
+import com.example.onlineshop.view.adapter.RecyclerAdapter;
 import com.example.onlineshop.databinding.FragmentHomeBinding;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.viewmodel.HomeViewModel;
@@ -34,14 +35,10 @@ public class HomeFragment extends ConnectionFragment  {
     private HomeViewModel mHomeViewModel;
     private FragmentHomeBinding mBinding;
 
-    //private RecyclerView mRecyclerViewBestProducts;
     private RecyclerAdapter mRecyclerAdapterBestProducts;
-
-    //private RecyclerView mRecyclerViewLatestProducts;
     private RecyclerAdapter mRecyclerAdapterLatestProducts;
-
-    //private RecyclerView mRecyclerViewMostPopularProducts;
     private RecyclerAdapter mRecyclerAdapterPopularProducts;
+    private CategoryRecyclerAdapter mRecyclerAdapterCategories;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -84,31 +81,38 @@ public class HomeFragment extends ConnectionFragment  {
                 setUpAdapterMostPopular(products);
             }
         });
+
+       mHomeViewModel.getCategoriesLiveData().observe(this, new Observer<List<CategoriesItem>>() {
+           @Override
+           public void onChanged(List<CategoriesItem> categoryItems) {
+               setUpAdapterCategories(categoryItems);
+           }
+       });
+    }
+
+    private void setUpAdapterCategories(List<CategoriesItem> categoryItems) {
+        if (mRecyclerAdapterCategories == null) {
+            mRecyclerAdapterCategories = new CategoryRecyclerAdapter(mHomeViewModel.getCategoriesLiveData().getValue(), getContext());
+            mBinding.recyclerViewCategories.setAdapter(mRecyclerAdapterCategories);
+        } else {
+            mRecyclerAdapterCategories.setCategoryItems(categoryItems);
+            mRecyclerAdapterCategories.notifyDataSetChanged();
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //View view = inflater.inflate(R.layout.fragment_home, container, false);
         mBinding = DataBindingUtil.inflate(inflater , R.layout.fragment_home, container, false);
-
         initUI();
-
         return mBinding.getRoot();
     }
 
     private void initUI() {
-//        mRecyclerViewBestProducts = view.findViewById(R.id.recycler_view_bestProducts);
-//        mRecyclerViewLatestProducts = view.findViewById(R.id.recycler_view_LatestProducts);
-//        mRecyclerViewMostPopularProducts = view.findViewById(R.id.recycler_view_popularProducts);
-
         mBinding.recyclerViewLatestProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
         mBinding.recyclerViewBestProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        mRecyclerAdapterBestProducts = new RecyclerAdapter(mHomeViewModel.getBestProductsLiveData().getValue(), getContext());
-//        mRecyclerViewBestProducts.setAdapter(mRecyclerAdapterBestProducts);
-
         mBinding.recyclerViewPopularProducts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mBinding.recyclerViewCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void setUpAdapterBest(List<Product> products) {

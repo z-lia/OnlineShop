@@ -18,7 +18,7 @@ import com.example.onlineshop.viewmodel.SplashViewModel;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 3000;
+    private final int SPLASH_DISPLAY_LENGTH = 1000;
     private SplashViewModel mSplashViewModel;
 
     @Override

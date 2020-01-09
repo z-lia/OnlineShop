@@ -5,6 +5,9 @@
     <color name="colorPrimaryDark">#c4001d</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorLightGreen">#64dd17</color>
+    <color name="colorLight2Green">#00c853</color>
+    <color name="colorDarkGreen">#1faa00</color>
     <color name="colorWhit">#FFFFFF</color>
+    <color name="colorGray">#FFFFFF</color>
 
 </resources>
