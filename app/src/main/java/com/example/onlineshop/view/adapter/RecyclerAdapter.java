@@ -43,6 +43,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Produc
     public ProductHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view ;
+        //view = inflater.inflate(R.layout.list_item_product, parent, false);
         if (mContext instanceof HomeMainActivity)
             view = inflater.inflate(R.layout.list_item_product, parent, false);
         else //if (mContext instanceof ProductListActivity)

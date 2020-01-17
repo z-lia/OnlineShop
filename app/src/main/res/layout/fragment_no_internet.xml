@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    tools:context=".view.NoInternetFragment">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_signal_wifi_off"
-        android:layout_margin="@dimen/margin_text"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/network_connection_error"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/margin_text"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/check_network_setting"
-        android:layout_margin="@dimen/margin_text"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context=".view.NoInternetFragment">
 
-    <Button
-        android:id="@+id/button_try_again"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
-        android:text="@string/try_again"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_margin="@dimen/margin_text"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_text"
+            android:src="@drawable/ic_signal_wifi_off" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_text"
+            android:text="@string/network_connection_error" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_text"
+            android:text="@string/check_network_setting" />
+
+        <Button
+            android:id="@+id/button_try_again"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_text"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/try_again" />
+
+    </LinearLayout>
+</layout>

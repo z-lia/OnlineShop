@@ -1,8 +1,6 @@
 package com.example.onlineshop.model;
 
-import com.example.onlineshop.auto_model.CategoriesItem;
 import com.example.onlineshop.auto_model.Dimensions;
-import com.example.onlineshop.auto_model.ImagesItem;
 import com.example.onlineshop.auto_model.Links;
 import com.example.onlineshop.auto_model.MetaDataItem;
 import com.example.onlineshop.auto_model.TagsItem;

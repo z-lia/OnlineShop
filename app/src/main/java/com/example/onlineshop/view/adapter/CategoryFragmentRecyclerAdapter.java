@@ -10,16 +10,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.ListItemCategoryBinding;
+import com.example.onlineshop.databinding.ListItemCategoryFragmentBinding;
 import com.example.onlineshop.model.CategoriesItem;
+import com.example.onlineshop.view.HomeMainActivity;
 import com.example.onlineshop.view.adapter.viewholder.CategoryHolder;
+import com.example.onlineshop.view.adapter.viewholder.CategoryHolderInCategoryFragment;
+
 import java.util.List;
 
-public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryHolder> {
+public class CategoryFragmentRecyclerAdapter extends RecyclerView.Adapter<CategoryHolderInCategoryFragment> {
 
     private List<CategoriesItem> mCategoryItems;
     private Context mContext;
 
-    public CategoryRecyclerAdapter(List<CategoriesItem> categoryItems, Context context) {
+    public CategoryFragmentRecyclerAdapter(List<CategoriesItem> categoryItems, Context context) {
         this.mCategoryItems = categoryItems;
         this.mContext = context;
     }
@@ -30,21 +34,17 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryHolder
 
     @NonNull
     @Override
-    public CategoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            ListItemCategoryBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext),
-                    R.layout.list_item_category, parent, false);
-            return new CategoryHolder(binding);
-//        else //mContext instanceof CategoryActivity
-//        {
-//            ListItemCategoryFragmentBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.list_item_category_fragment, parent, false);
-//            return new CategoryHolderInCategoryFragment(binding);
-//        }
+    public CategoryHolderInCategoryFragment onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            ListItemCategoryFragmentBinding binding = DataBindingUtil.inflate(
+                    LayoutInflater.from(mContext), R.layout.list_item_category_fragment, parent, false);
+            return new CategoryHolderInCategoryFragment(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CategoryHolderInCategoryFragment holder, int position) {
         holder.bind(mCategoryItems.get(position));
     }
+
 
     @Override
     public int getItemCount() {

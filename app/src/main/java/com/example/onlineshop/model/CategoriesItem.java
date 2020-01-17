@@ -15,6 +15,12 @@ public class CategoriesItem {
 	@SerializedName("slug")
 	private String slug;
 
+	@SerializedName("parent")
+	private int parent;
+
+	@SerializedName("image")
+	private ImagesItem image ;
+
 	public void setName(String name){
 		this.name = name;
 	}
@@ -39,6 +45,18 @@ public class CategoriesItem {
 		return slug;
 	}
 
+	public int getParent() {
+		return parent;
+	}
+
+	public void setParent(int parent) {
+		this.parent = parent;
+	}
+
+	public ImagesItem getImage() {
+		return image;
+	}
+
 	@Override
  	public String toString(){
 		return 
@@ -48,4 +66,6 @@ public class CategoriesItem {
 			",slug = '" + slug + '\'' + 
 			"}";
 		}
+
+
 }

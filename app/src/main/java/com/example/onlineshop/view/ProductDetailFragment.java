@@ -20,10 +20,8 @@ import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentProductDetailBinding;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.view.adapter.ViewPagerSliderAdapter;
+import com.example.onlineshop.view.adapter.ImageSliderPagerAdapter;
 import com.example.onlineshop.viewmodel.HomeViewModel;
-import com.example.onlineshop.viewmodel.ProductDetailViewModel;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +33,7 @@ public class ProductDetailFragment extends ConnectionFragment {
     private HomeViewModel mViewModel;
     private FragmentProductDetailBinding mBinding;
     private ViewPagerSliderAdapter mViewPagerSliderAdapter;
+    private ImageSliderPagerAdapter mViewPagerAdapter;
 
     public ProductDetailFragment() {
         // Required empty public constructor
@@ -43,7 +42,7 @@ public class ProductDetailFragment extends ConnectionFragment {
     public static ProductDetailFragment newInstance(int productId) {
 
         Bundle args = new Bundle();
-        args.putInt(ARGS_PRODUCT , productId);
+        args.putInt(ARGS_PRODUCT, productId);
         ProductDetailFragment fragment = new ProductDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -57,6 +56,7 @@ public class ProductDetailFragment extends ConnectionFragment {
         //mProductDetailViewModel.setProductID(mProductID);
         mViewModel.fetchProductByID(mProductID);
 
+
         mViewModel.getProductMutableLiveData().observe(this, new Observer<Product>() {
             @Override
             public void onChanged(Product product) {
@@ -67,9 +67,9 @@ public class ProductDetailFragment extends ConnectionFragment {
                 //why null ???
 //                mBinding.textViewProductPrice.setText(mViewModel.getProductPrice());
 //                if(mViewModel.isOnSale()){
-                if(mViewModel.getProductMutableLiveData().getValue().isOnSale()){
+                if (mViewModel.getProductMutableLiveData().getValue().isOnSale()) {
 //                    mBinding.textViewProductPriceOnSale.setText(mViewModel.getProductMutableLiveData().getValue().getSalePrice());
-                    mBinding.textViewProductPrice.setPaintFlags( mBinding.textViewProductPrice.getPaintFlags() |Paint.STRIKE_THRU_TEXT_FLAG);
+                    mBinding.textViewProductPrice.setPaintFlags(mBinding.textViewProductPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 }
                 setProductDescription();
                 setViewPagerAdapter();
@@ -79,7 +79,7 @@ public class ProductDetailFragment extends ConnectionFragment {
     }
 
 
-    public void setProductDescription(){
+    public void setProductDescription() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             mBinding.textViewProductDescription.setText(Html.fromHtml(mViewModel.getProductMutableLiveData().getValue().getDescription(), Html.FROM_HTML_MODE_COMPACT));
         } else {
@@ -87,23 +87,30 @@ public class ProductDetailFragment extends ConnectionFragment {
                     Html.fromHtml(mViewModel.getProductMutableLiveData().getValue().getDescription()));
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_detail, container, false);
 //        mBinding.setMViewModel(mViewModel);
-        setViewPagerAdapter();
 
         return mBinding.getRoot();
     }
-    public void setViewPagerAdapter(){
-        ArrayList<String> sourceOfImages = new ArrayList<>() ;
-        if(mViewModel.getProductMutableLiveData().getValue()!=null) {
-             sourceOfImages = mViewModel.getProductImages();
-        }
-        mViewPagerSliderAdapter = new ViewPagerSliderAdapter(sourceOfImages, getContext());
-        mBinding.viewPager2Slider.setAdapter(mViewPagerSliderAdapter);
+
+    public void setViewPagerAdapter() {
+        mViewPagerAdapter = new ImageSliderPagerAdapter(mViewModel.getProductMutableLiveData().getValue().getImages(), getContext());
+        mBinding.viewPagerImageProduct.setAdapter(mViewPagerAdapter);
+        mBinding.viewPagerImageProduct.setCurrentItem(mViewPagerAdapter.getCount() - 1);
+
     }
+//    public void setViewPagerAdapter(){
+//        ArrayList<String> sourceOfImages = new ArrayList<>() ;
+//        if(mViewModel.getProductMutableLiveData().getValue()!=null) {
+//             sourceOfImages = mViewModel.getProductImages();
+//        }
+//        mViewPagerSliderAdapter = new ViewPagerSliderAdapter(sourceOfImages, getContext());
+//      //  mBinding.viewPager2Slider.setAdapter(mViewPagerSliderAdapter);
+//    }
 
 }

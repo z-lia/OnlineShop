@@ -41,12 +41,14 @@ public class HomeMainActivity extends SingleFragmentActivity {
                     case R.id.nav_menu_home:
                         break;
                     case R.id.nav_menu_product_category:
+                        startActivity(CategoryActivity.newIntent(HomeMainActivity.this ));
                         break;
                     case R.id.nav_menu_shopping_cart:
                         break;
 
                     case R.id.nav_menu_latest_products:
-                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this ,ProductListActivity.LATEST_PRODUCT ));
+                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this ,
+                                ProductListActivity.LATEST_PRODUCT ));
                         break;
 
                     case R.id.nav_menu_most_visited_products:
