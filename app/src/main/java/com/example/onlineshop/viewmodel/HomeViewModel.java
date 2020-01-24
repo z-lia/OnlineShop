@@ -19,6 +19,8 @@ public class HomeViewModel extends AndroidViewModel {
     private MutableLiveData <List<Product>> mBestProductsLiveData;
     private MutableLiveData <List<Product>> mMostPopularProductsLiveData;
 
+    private MutableLiveData<List<Product>> mSliderProducts;
+
     private MutableLiveData <List<CategoriesItem>> mCategoriesLiveData;
 
     private MutableLiveData<Product> mProductMutableLiveData;
@@ -33,6 +35,7 @@ public class HomeViewModel extends AndroidViewModel {
         mBestProductsLiveData = mRepository.getBestProductsLiveData();
         mMostPopularProductsLiveData = mRepository.getMostPopularProductsLiveData();
         mCategoriesLiveData = mRepository.getCategoryItemsLiveData();
+        mSliderProducts = mRepository.getSliderProducts();
     }
 
     public MutableLiveData<List<Product>> getLatestProductLiveData() {
@@ -67,5 +70,9 @@ public class HomeViewModel extends AndroidViewModel {
 
     public LiveData<List<CategoriesItem>> getCategoriesLiveData() {
         return mCategoriesLiveData;
+    }
+
+    public MutableLiveData<List<Product>> getSliderProducts() {
+        return mSliderProducts;
     }
 }

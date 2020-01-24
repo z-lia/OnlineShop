@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.model.CategoriesItem;
@@ -23,6 +25,7 @@ import com.example.onlineshop.view.adapter.RecyclerAdapter;
 import com.example.onlineshop.databinding.FragmentHomeBinding;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.viewmodel.HomeViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -88,6 +91,13 @@ public class HomeFragment extends ConnectionFragment  {
                setUpAdapterCategories(categoryItems);
            }
        });
+
+       mHomeViewModel.getSliderProducts().observe(this, new Observer<List<Product>>() {
+           @Override
+           public void onChanged(List<Product> products) {
+               flipperImage();
+           }
+       });
     }
 
     private void setUpAdapterCategories(List<CategoriesItem> categoryItems) {
@@ -105,7 +115,30 @@ public class HomeFragment extends ConnectionFragment  {
         // Inflate the layout for this fragment
         mBinding = DataBindingUtil.inflate(inflater , R.layout.fragment_home, container, false);
         initUI();
+        setViewFlipper();
         return mBinding.getRoot();
+    }
+
+
+    private void setViewFlipper() {
+        mBinding.viewFlipper.setFlipInterval(2000);
+        mBinding.viewFlipper.setAutoStart(true);
+
+        //animation
+        mBinding.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.in_from_right));
+        mBinding.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.out_from_left));
+    }
+
+    private void flipperImage(){
+        //ImageView imageView = new ImageView(getContext());
+        List<Product> sliderProducts = mHomeViewModel.getSliderProducts().getValue();
+        for(int i = 0; i<sliderProducts.size(); i++) {
+            ImageView imageView = new ImageView(getContext());
+            Picasso.get()
+                    .load(sliderProducts.get(i).getImages().get(0).getSrc())
+                .into(imageView);
+            mBinding.viewFlipper.addView(imageView);
+        }
     }
 
     private void initUI() {

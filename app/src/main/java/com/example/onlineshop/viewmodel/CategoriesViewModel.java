@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlineshop.model.CategoriesItem;
+import com.example.onlineshop.model.Product;
 import com.example.onlineshop.network.WooCommerceRepository;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class CategoriesViewModel extends AndroidViewModel {
     private MutableLiveData<List<CategoriesItem>> mParentCategoriesLiveData = new MutableLiveData<List<CategoriesItem>>();
     private MutableLiveData<List<CategoriesItem>> mSubCategoriesLiveData = new MutableLiveData<>();
     private MutableLiveData<List<CategoriesItem>> mSubCategoriesLiveData2 = new MutableLiveData<>();
+    private MutableLiveData <List<Product>> mProductOfCategory = new MutableLiveData<>();
 
     public CategoriesViewModel(@NonNull Application application) {
         super(application);
@@ -29,6 +31,10 @@ public class CategoriesViewModel extends AndroidViewModel {
         setParentCategoriesLiveData();
         setSubCategoriesLiveData();
         mSubCategoriesLiveData2 = mRepository.getSubCategoryItemsLiveData();
+    }
+
+    public void fetchProductOfCategory(int categoryId){
+
     }
 
     private void setParentCategoriesLiveData() {

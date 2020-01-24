@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-<!--    <data>-->
-<!--        <variable-->
-<!--            name="mHomeViewModel"-->
-<!--            type="com.example.onlineshop.viewmodel.HomeViewModel" />-->
-<!--        -->
-<!--    </data>-->
+    <!--    <data>-->
+    <!--        <variable-->
+    <!--            name="mHomeViewModel"-->
+    <!--            type="com.example.onlineshop.viewmodel.HomeViewModel" />-->
+    <!--        -->
+    <!--    </data>-->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,6 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <ViewFlipper
+                android:id="@+id/view_flipper"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -50,20 +55,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="@dimen/margin_low_layout">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="@string/best_products" />
+                android:layout_margin="@dimen/margin_low_layout"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/best_products" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:text="@string/all_list"
-                    android:linksClickable="true" />
+                    android:linksClickable="true"
+                    android:text="@string/all_list" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -75,18 +81,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="@dimen/margin_low_layout">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/popular_products" />
+                android:layout_margin="@dimen/margin_low_layout"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/popular_products" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:text="@string/all_list"
-                    android:linksClickable="true"/>
+                    android:linksClickable="true"
+                    android:text="@string/all_list" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

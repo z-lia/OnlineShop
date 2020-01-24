@@ -37,7 +37,7 @@ public class CategoryFragmentRecyclerAdapter extends RecyclerView.Adapter<Catego
     public CategoryHolderInCategoryFragment onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             ListItemCategoryFragmentBinding binding = DataBindingUtil.inflate(
                     LayoutInflater.from(mContext), R.layout.list_item_category_fragment, parent, false);
-            return new CategoryHolderInCategoryFragment(binding);
+            return new CategoryHolderInCategoryFragment(binding , mContext);
     }
 
     @Override

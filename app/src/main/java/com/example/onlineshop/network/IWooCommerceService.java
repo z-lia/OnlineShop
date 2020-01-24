@@ -34,4 +34,6 @@ public interface IWooCommerceService {
     @GET("products/")
     Call <List<Product>> getProductsOfCategoryById( @QueryMap Map<String, String> queries );
 
+    @GET("products/608")
+    Call<List<Product>> getSliderProducts(@QueryMap Map<String, String> mProductQueries);
 }
