@@ -2,7 +2,9 @@ package com.example.onlineshop.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -30,33 +32,33 @@ public class HomeMainActivity extends SingleFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         ViewCompat.setLayoutDirection(mBinding.drawerLayout, ViewCompat.LAYOUT_DIRECTION_RTL);
         setNavigationDrawer();
         mBinding.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.nav_menu_home:
                         break;
                     case R.id.nav_menu_product_category:
-                        startActivity(CategoryActivity.newIntent(HomeMainActivity.this ));
+                        startActivity(CategoryActivity.newIntent(HomeMainActivity.this));
                         break;
                     case R.id.nav_menu_shopping_cart:
                         break;
 
                     case R.id.nav_menu_latest_products:
-                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this ,
-                                ProductListActivity.LATEST_PRODUCT ));
+                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this,
+                                ProductListActivity.LATEST_PRODUCT));
                         break;
 
                     case R.id.nav_menu_most_visited_products:
-                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this ,ProductListActivity.MOST_VISIT_PRODUCT ));
+                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this, ProductListActivity.MOST_VISIT_PRODUCT));
                         break;
 
                     case R.id.nav_menu_popular_products:
-                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this ,ProductListActivity.POPULAR_PRODUCT ));
+                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this, ProductListActivity.POPULAR_PRODUCT));
                         break;
 
                 }
@@ -64,6 +66,23 @@ public class HomeMainActivity extends SingleFragmentActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+        MenuItem searchMenuItem = menu.findItem(R.id.search_home);
+
+        searchMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                startActivity(SearchActivity.newIntent(HomeMainActivity.this));
+                return true;
+            }
+        });
+
+        return true;
     }
 
     private void setNavigationDrawer() {

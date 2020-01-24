@@ -9,5 +9,6 @@
     <color name="colorDarkGreen">#1faa00</color>
     <color name="colorWhit">#FFFFFF</color>
     <color name="colorGray">#D1C9C9</color>
+    <color name="colorLightGray">#E9DCDC</color>
 
 </resources>
