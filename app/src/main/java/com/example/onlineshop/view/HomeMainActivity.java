@@ -1,20 +1,15 @@
 package com.example.onlineshop.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.ActivityMainBinding;
@@ -71,7 +66,7 @@ public class HomeMainActivity extends SingleFragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.home_menu, menu);
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         MenuItem searchMenuItem = menu.findItem(R.id.search_home);
 
         searchMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {

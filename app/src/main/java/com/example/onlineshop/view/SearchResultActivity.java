@@ -6,18 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-public class SearchActivity extends SingleFragmentActivity {
+public class SearchResultActivity extends SingleFragmentActivity {
+
+    private static final String EXTRA_QUERY_SEARCH ="com.example.onlineshop.view query_search" ;
 
     @Override
     public Fragment createFragment() {
-        return SearchResultFragment.newInstance();
+        String query = getIntent().getStringExtra(EXTRA_QUERY_SEARCH);
+        return SearchResultFragment.newInstance(query);
     }
 
-    public static Intent newIntent(Context context){
+    public static Intent newIntent(Context context , String query){
         Intent intent = new Intent(context , SearchActivity.class);
+        intent.putExtra(EXTRA_QUERY_SEARCH, query);
         return intent;
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
