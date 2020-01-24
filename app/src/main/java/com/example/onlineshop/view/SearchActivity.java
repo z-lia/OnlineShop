@@ -10,7 +10,7 @@ public class SearchActivity extends SingleFragmentActivity {
 
     @Override
     public Fragment createFragment() {
-        return SearchResultFragment.newInstance();
+        return SearchFragment.newInstance();
     }
 
     public static Intent newIntent(Context context){

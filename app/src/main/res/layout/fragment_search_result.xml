@@ -10,10 +10,12 @@
         tools:context=".view.SearchResultFragment">
 
         <androidx.appcompat.widget.Toolbar
+            android:layoutDirection="rtl"
             android:id="@+id/toolbar_search"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:elevation="4dp"
             />
 
@@ -39,8 +41,7 @@
                 android:layout_weight="1"
                 android:text="@string/sort"
                 android:backgroundTint="@color/colorWhit"
-                android:textColor="@color/colorBlack"
-                />
+                android:textColor="@color/colorBlack" />
 
         </LinearLayout>
 

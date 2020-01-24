@@ -17,7 +17,7 @@ public class SearchResultActivity extends SingleFragmentActivity {
     }
 
     public static Intent newIntent(Context context , String query){
-        Intent intent = new Intent(context , SearchActivity.class);
+        Intent intent = new Intent(context , SearchResultActivity.class);
         intent.putExtra(EXTRA_QUERY_SEARCH, query);
         return intent;
     }

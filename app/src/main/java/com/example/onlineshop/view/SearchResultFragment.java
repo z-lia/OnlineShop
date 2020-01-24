@@ -37,6 +37,7 @@ public class SearchResultFragment extends Fragment {
     private FragmentSearchResultBinding mBinding;
     private SearchViewModel mSearchViewModel;
     private RecyclerAdapter mRecyclerAdapter;
+    private String mSearchQuery;
 
     public SearchResultFragment() {
         // Required empty public constructor
@@ -46,7 +47,6 @@ public class SearchResultFragment extends Fragment {
 
         Bundle args = new Bundle();
         args.putString(ARGS_SEARCH_QUERY, query);
-
         SearchResultFragment fragment = new SearchResultFragment();
         fragment.setArguments(args);
         return fragment;
@@ -56,6 +56,7 @@ public class SearchResultFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSearchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
+        mSearchQuery = getArguments().getString(ARGS_SEARCH_QUERY);
     }
 
     private void setAdapter(List<Product> products) {
@@ -73,32 +74,28 @@ public class SearchResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_result, container, false);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.toolbarSearch);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         setHasOptionsMenu(true);
+        mBinding.toolbarSearch.setTitle(mSearchQuery);
         mBinding.recyclerViewSearchResult.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        updateItems(mSearchQuery);
         return mBinding.getRoot();
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.toolbar_menu, menu);
 
-        MenuItem searchMenuItem = menu.findItem(R.id.menu_item_search);
-        final SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        MenuItem searchMenuItem = menu.findItem(R.id.search_home);
+        searchMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                  updateItems(query);
-
+            public boolean onMenuItemClick(MenuItem item) {
+                startActivity(SearchActivity.newIntent(getContext()));
+                getActivity().finish();
                 return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
             }
         });
 
