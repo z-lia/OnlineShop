@@ -107,6 +107,32 @@ public class WooCommerceRepository {
 
     }
 
+    public MutableLiveData<List<Product>> fetchSearchProducts(final String searchQuery){
+        final Map <String , String > queryParameters = new HashMap<>();
+        queryParameters.putAll(mProductQueries);
+        queryParameters.put("search" , searchQuery);
+        final MutableLiveData<List<Product>> searchedProductsMLiveData = new MutableLiveData<>();
+        Call<List<Product>>call = mIwooCommerceService.getLatestProducts(queryParameters);
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse search: "+ searchQuery);
+                    List<Product> searchProducts = response.body();
+                    searchedProductsMLiveData.setValue(searchProducts);
+                } else {
+                    Log.d(TAG, "onResponse search: is not successful ");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+        return  searchedProductsMLiveData;
+    }
+
     public void fetchSliderProducts(){
         Call<List<Product>> call = mIwooCommerceService.getSliderProducts(mProductQueries);
         call.enqueue(new Callback<List<Product>>() {
