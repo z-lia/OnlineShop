@@ -1,16 +1,24 @@
 package com.example.onlineshop.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.onlineshop.R;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends SingleFragmentActivityWithToolbar {
+
+    public static Intent newIntent(Context context){
+        return new Intent(context , CartActivity.class);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_caert);
+    public Fragment createFragment() {
+        return CartFragment.newInstance();
     }
+
+
 }
