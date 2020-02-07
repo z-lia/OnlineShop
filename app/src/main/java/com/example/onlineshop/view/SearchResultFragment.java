@@ -99,13 +99,15 @@ public class SearchResultFragment extends Fragment {
             }
         });
 
-//        searchView.setOnSearchClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String query = QueryPreferences.getLastQuery(getContext());
-//                searchView.setQuery(query, false);
-//            }
-//        });
+        MenuItem cartMenuItem = menu.findItem(R.id.cart);
+        cartMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                startActivity(CartActivity.newIntent(getContext()));
+                getActivity().finish();
+                return true;
+            }
+        });
     }
 
     private void updateItems(String query) {

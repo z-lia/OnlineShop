@@ -26,5 +26,18 @@
     <string name="sort">مرتب سازی</string>
     <string name="filter">فیلتر</string>
 
+    <string name="sum_prices">جمع کل خرید</string>
+    <string name="toman">تومان</string>
+    <string name="total_price">قیمت کل</string>
+    <string name="final_price">قیمت نهایی</string>
+    <string name="delete">حذف</string>
+    <string name="sale">تخفیف شگفت انگیز</string>
+    <string name="forget_my_password">کلمه عبورم را فراموشم کردم</string>
+    <string name="register">ثبت نام در فروشگاه</string>
+    <string name="hint_username">شماره موبايل يا ايميل</string>
+    <string name="hint_password">کلمه عبور</string>
+    <string name="show_password">نمایش کلمه عبور</string>
+    <string name="login">ورود به فروشگاه</string>
+
 
 </resources>

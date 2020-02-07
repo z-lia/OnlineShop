@@ -12,19 +12,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.SearchResultActivity"></activity>
+        <activity android:name=".view.RegisterActivity"></activity>
+        <activity android:name=".view.LoginActivity" />
+        <activity android:name=".view.SingleFragmentActivityWithToolbar" />
+        <activity android:name=".view.SearchResultActivity" />
         <activity android:name=".view.CartActivity" />
         <activity android:name=".view.SearchActivity" />
-        <activity android:name=".view.SingleFragmetActivityWithToolbar" />
         <activity android:name=".view.CategoryActivity" />
         <activity android:name=".view.NoInternetActivity" />
         <activity android:name=".view.ProductListActivity" />
+        <activity android:name=".view.ProductsOfCategoryActivity" />
         <activity
-            android:name=".view.SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".view.SplashActivity">
+<!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

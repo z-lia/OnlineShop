@@ -19,7 +19,7 @@ public class CategoriesViewModel extends AndroidViewModel {
     private WooCommerceRepository mRepository;
     private LiveData<List<CategoriesItem>> mCategoriesListLiveData;
     private MutableLiveData<List<CategoriesItem>> mParentCategoriesLiveData = new MutableLiveData<List<CategoriesItem>>();
-    private MutableLiveData<List<CategoriesItem>> mSubCategoriesLiveData = new MutableLiveData<>();
+    //private MutableLiveData<List<CategoriesItem>> mSubCategoriesLiveData = new MutableLiveData<>();
     private MutableLiveData<List<CategoriesItem>> mSubCategoriesLiveData2 = new MutableLiveData<>();
     private MutableLiveData <List<Product>> mProductOfCategory = new MutableLiveData<>();
 
@@ -29,12 +29,12 @@ public class CategoriesViewModel extends AndroidViewModel {
         //mRepository.fetchAllCategories();
         mCategoriesListLiveData = mRepository.getCategoryItemsLiveData();
         setParentCategoriesLiveData();
-        setSubCategoriesLiveData();
+        //setSubCategoriesLiveData();
         mSubCategoriesLiveData2 = mRepository.getSubCategoryItemsLiveData();
     }
 
-    public void fetchProductOfCategory(int categoryId){
-
+    public MutableLiveData<List<Product>> fetchProductOfCategory(int categoryId){
+       return mRepository.fetchProductsOfCategory(categoryId);
     }
 
     private void setParentCategoriesLiveData() {
@@ -46,17 +46,17 @@ public class CategoriesViewModel extends AndroidViewModel {
         mParentCategoriesLiveData.setValue(parentCategories);
     }
 
-    private void setSubCategoriesLiveData() {
-        List<CategoriesItem> subCategories = new ArrayList<>();
-
-        for (int j = 0; j < mParentCategoriesLiveData.getValue().size(); j++) {
-            for (int i = 0; i < mCategoriesListLiveData.getValue().size(); i++) {
-                if (mCategoriesListLiveData.getValue().get(i).getParent() == mParentCategoriesLiveData.getValue().get(j).getId())
-                    subCategories.add(mCategoriesListLiveData.getValue().get(i));
-            }
-        }
-        mSubCategoriesLiveData.setValue(subCategories);
-    }
+//    private void setSubCategoriesLiveData() {
+//        List<CategoriesItem> subCategories = new ArrayList<>();
+//
+//        for (int j = 0; j < mParentCategoriesLiveData.getValue().size(); j++) {
+//            for (int i = 0; i < mCategoriesListLiveData.getValue().size(); i++) {
+//                if (mCategoriesListLiveData.getValue().get(i).getParent() == mParentCategoriesLiveData.getValue().get(j).getId())
+//                    subCategories.add(mCategoriesListLiveData.getValue().get(i));
+//            }
+//        }
+//        mSubCategoriesLiveData.setValue(subCategories);
+//    }
 
     public LiveData<List<CategoriesItem>> getParentCategoriesListLiveData() {
         return mParentCategoriesLiveData;
@@ -67,9 +67,9 @@ public class CategoriesViewModel extends AndroidViewModel {
         return mCategoriesListLiveData;
     }
 
-    public MutableLiveData<List<CategoriesItem>> getSubCategoriesLiveData() {
-        return mSubCategoriesLiveData;
-    }
+//    public MutableLiveData<List<CategoriesItem>> getSubCategoriesLiveData() {
+//        return mSubCategoriesLiveData;
+//    }
 
     public MutableLiveData<List<CategoriesItem>> getSubCategoriesLiveData2() {
         return mSubCategoriesLiveData2;
@@ -85,6 +85,16 @@ public class CategoriesViewModel extends AndroidViewModel {
         MutableLiveData<List<CategoriesItem>> subCategoriesLiveData = new MutableLiveData<>();
         subCategoriesLiveData.setValue(subCategories);
         return subCategoriesLiveData;
+    }
+
+    public CategoriesItem getCategoryByID(int categoryId){
+        CategoriesItem categoryItem = new CategoriesItem();
+        for(int i =0; i<mSubCategoriesLiveData2.getValue().size(); i++) {
+            if (mSubCategoriesLiveData2.getValue().get(i).getId() == categoryId)
+                categoryItem = mSubCategoriesLiveData2.getValue().get(i);
+        }
+
+        return categoryItem;
     }
 
 }

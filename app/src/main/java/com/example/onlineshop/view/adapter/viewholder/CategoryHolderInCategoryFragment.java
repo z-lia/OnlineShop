@@ -32,11 +32,11 @@ public class CategoryHolderInCategoryFragment extends RecyclerView.ViewHolder {
                 .into(mBinding.imageViewCategoryImage);
     }
 
-    public void onClick(){
+    private void onClick(){
         mBinding.linearLayoutCategoryItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = ProductsOfCategoryActivity.newIntent(mContext , mCategoriesItem.getId());
+                Intent intent = ProductsOfCategoryActivity.newIntent(mContext , mCategoriesItem.getId() , mCategoriesItem.getName());
                 mContext.startActivity(intent);
 
             }

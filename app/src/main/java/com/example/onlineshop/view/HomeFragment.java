@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends ConnectionFragment  {
+public class HomeFragment extends ConnectionFragment {
 
     private HomeViewModel mHomeViewModel;
     private FragmentHomeBinding mBinding;
@@ -67,7 +67,7 @@ public class HomeFragment extends ConnectionFragment  {
             @Override
             public void onChanged(List<Product> products) {
                 setupAdapterLatest(products);
-                Log.d("Observer", "Latest"+products.size());
+                Log.d("Observer", "Latest" + products.size());
             }
         });
 
@@ -85,19 +85,19 @@ public class HomeFragment extends ConnectionFragment  {
             }
         });
 
-       mHomeViewModel.getCategoriesLiveData().observe(this, new Observer<List<CategoriesItem>>() {
-           @Override
-           public void onChanged(List<CategoriesItem> categoryItems) {
-               setUpAdapterCategories(categoryItems);
-           }
-       });
+        mHomeViewModel.getCategoriesLiveData().observe(this, new Observer<List<CategoriesItem>>() {
+            @Override
+            public void onChanged(List<CategoriesItem> categoryItems) {
+                setUpAdapterCategories(categoryItems);
+            }
+        });
 
-       mHomeViewModel.getSliderProducts().observe(this, new Observer<List<Product>>() {
-           @Override
-           public void onChanged(List<Product> products) {
-               flipperImage();
-           }
-       });
+        mHomeViewModel.getSliderProducts().observe(this, new Observer<Product>() {
+            @Override
+            public void onChanged(Product product) {
+                setFlipperImage();
+            }
+        });
     }
 
     private void setUpAdapterCategories(List<CategoriesItem> categoryItems) {
@@ -113,32 +113,78 @@ public class HomeFragment extends ConnectionFragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = DataBindingUtil.inflate(inflater , R.layout.fragment_home, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         initUI();
         setViewFlipper();
+        setFlipperImage();
+        setClickListener();
         return mBinding.getRoot();
     }
 
+    private void setClickListener() {
+
+        //jaditarin
+        mBinding.textViewListAllLatest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(ProductListActivity.newIntent(HomeFragment.this.getContext(),
+                        ProductListActivity.LATEST_PRODUCT));
+            }
+        });
+
+
+        mBinding.textViewListAllBestProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(ProductListActivity.newIntent(HomeFragment.this.getContext(),
+                        ProductListActivity.MOST_VISIT_PRODUCT));
+            }
+        });
+
+
+        mBinding.textViewListAllPopularProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(ProductListActivity.newIntent(HomeFragment.this.getContext(),
+                        ProductListActivity.POPULAR_PRODUCT));
+            }
+        });
+
+
+    }
 
     private void setViewFlipper() {
         mBinding.viewFlipper.setFlipInterval(2000);
         mBinding.viewFlipper.setAutoStart(true);
 
         //animation
-        mBinding.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.in_from_right));
-        mBinding.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.out_from_left));
+        //mBinding.viewFlipper.setAnimation();
+        mBinding.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.in_from_right));
+        mBinding.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.out_from_left  ));
     }
 
-    private void flipperImage(){
-        //ImageView imageView = new ImageView(getContext());
-        List<Product> sliderProducts = mHomeViewModel.getSliderProducts().getValue();
-        for(int i = 0; i<sliderProducts.size(); i++) {
-            ImageView imageView = new ImageView(getContext());
-            Picasso.get()
-                    .load(sliderProducts.get(i).getImages().get(0).getSrc())
-                .into(imageView);
-            mBinding.viewFlipper.addView(imageView);
+    private void setFlipperImage() {
+
+        Product sliderProducts = mHomeViewModel.getSliderProducts().getValue();
+        if (sliderProducts != null) {
+            for (int i = 0; i < sliderProducts.getImages().size(); i++) {
+                ImageView imageView = new ImageView(getContext());
+                Picasso.get()
+                        .load(sliderProducts.getImages().get(i).getSrc())
+                        .into(imageView);
+                mBinding.viewFlipper.addView(imageView);
+            }
         }
+//        else{
+//            int []imageId = { R.drawable.image_placeholder ,
+//                    R.drawable.image_placeholder2 ,
+//            R.drawable.imageloadingplaceholder};
+//            for (int i = 0; i < imageId.length; i++) {
+//                ImageView imageView = new ImageView(getContext());
+//                imageView.setBackgroundResource(imageId[i]);
+//                mBinding.viewFlipper.addView(imageView);
+//            }
+//        }
     }
 
     private void initUI() {

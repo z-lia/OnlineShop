@@ -3,6 +3,8 @@ package com.example.onlineshop.view;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -31,6 +33,20 @@ public class HomeMainActivity extends SingleFragmentActivity {
 
         ViewCompat.setLayoutDirection(mBinding.drawerLayout, ViewCompat.LAYOUT_DIRECTION_RTL);
         setNavigationDrawer();
+        setNavigationItemSelectedListener();
+
+        View headerView = mBinding.navigationView.inflateHeaderView(R.layout.nav_header_main);
+        Button loginButton = headerView.findViewById(R.id.button_login_or_signup);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity( LoginActivity.newIntent(HomeMainActivity.this));
+            }
+        });
+
+    }
+
+    private void setNavigationItemSelectedListener() {
         mBinding.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -49,18 +65,19 @@ public class HomeMainActivity extends SingleFragmentActivity {
                         break;
 
                     case R.id.nav_menu_most_visited_products:
-                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this, ProductListActivity.MOST_VISIT_PRODUCT));
+                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this,
+                                ProductListActivity.MOST_VISIT_PRODUCT));
                         break;
 
                     case R.id.nav_menu_popular_products:
-                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this, ProductListActivity.POPULAR_PRODUCT));
+                        startActivity(ProductListActivity.newIntent(HomeMainActivity.this,
+                                ProductListActivity.POPULAR_PRODUCT));
                         break;
 
                 }
                 return true;
             }
         });
-
     }
 
     @Override
@@ -73,6 +90,16 @@ public class HomeMainActivity extends SingleFragmentActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 startActivity(SearchActivity.newIntent(HomeMainActivity.this));
+                return true;
+            }
+        });
+
+        MenuItem cartMenuItem = menu.findItem(R.id.cart);
+
+        cartMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                startActivity(CartActivity.newIntent(HomeMainActivity.this));
                 return true;
             }
         });

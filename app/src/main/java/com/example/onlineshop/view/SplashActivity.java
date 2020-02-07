@@ -29,9 +29,9 @@ public class SplashActivity extends AppCompatActivity {
         mSplashViewModel = ViewModelProviders.of(this).get(SplashViewModel.class);
 
 
-        if (NetworkHelper.isConnected(this))
+        if (NetworkHelper.isConnected(this)) {
             new PreFetchDataFromServer().execute(mSplashViewModel);
-        else {
+        } else {
             Intent intent = NoInternetActivity.newIntent(this);
             startActivity(intent);
             finish();

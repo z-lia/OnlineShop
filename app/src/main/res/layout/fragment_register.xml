@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        android:textDirection="rtl"
+        tools:context=".view.LoginFragment">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_register_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_layout_high"
+            android:layout_marginTop="@dimen/margin_layout_high"
+            android:layout_marginRight="@dimen/margin_layout_high"
+            android:drawableStart="@drawable/ic_email_black_24dp"
+            android:drawableLeft="@drawable/ic_search_black"
+            android:ems="10"
+            android:hint="@string/hint_username"
+            android:textColorLink="@color/colorGray"
+            android:inputType="textEmailAddress"
+            android:layoutDirection="rtl"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="9dp"
+            android:paddingBottom="9dp"
+            android:textDirection="anyRtl"
+            android:textSize="14sp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_register_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_layout_high"
+            android:layout_marginRight="@dimen/margin_layout_high"
+            android:drawableStart="@drawable/ic_password"
+            android:drawableLeft="@drawable/ic_search_black"
+            android:ems="10"
+            android:hint="@string/hint_password"
+            android:textColorHint="@color/colorGray"
+            android:outlineAmbientShadowColor="@color/colorDarkGreen"
+            android:textColorHighlight="@color/colorDarkGreen"
+            android:shadowColor="@color/colorDarkGreen"
+            android:outlineSpotShadowColor="@color/colorDarkGreen"
+            android:textColorLink="@color/colorDarkGreen"
+            android:inputType="numberPassword"
+            android:layoutDirection="rtl"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="9dp"
+            android:paddingBottom="9dp"
+            android:textDirection="rtl"
+            android:textSize="14sp" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_show_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_layout_high"
+            android:layout_marginTop="@dimen/margin_layout"
+            android:layout_marginEnd="@dimen/margin_layout_high"
+            android:layout_marginBottom="@dimen/margin_layout_high"
+            android:text="@string/show_password" />
+
+        <Button
+            android:id="@+id/button_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin_button_register"
+            android:backgroundTint="@color/colorDarkGreen"
+            android:text="@string/register" />
+    </LinearLayout>
+</layout>

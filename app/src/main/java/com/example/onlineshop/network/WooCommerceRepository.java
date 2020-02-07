@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlineshop.model.CategoriesItem;
+import com.example.onlineshop.model.Customer;
 import com.example.onlineshop.model.Product;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class WooCommerceRepository {
     private MutableLiveData<List<CategoriesItem>> mSubCategoryItemsLiveData;
 
     private MutableLiveData<List<Product>> mProductsOfSubCategoryMLiveData;
-    private MutableLiveData<List<Product>> mSliderProductsLiveData;
+    private MutableLiveData<Product> mSliderProductsLiveData;
 
     public static WooCommerceRepository getsInstance() {
         if (sInstance == null)
@@ -76,7 +77,7 @@ public class WooCommerceRepository {
         queries.putAll(mProductQueries);
         //get all parent category IDs and save them in parentIDs List
         for (int i = 0; i < mCategoryItemsLiveData.getValue().size(); i++) {
-            if(mCategoryItemsLiveData.getValue().get(i).getParent() == 0) {
+            if (mCategoryItemsLiveData.getValue().get(i).getParent() == 0) {
                 parentIDs.add(mCategoryItemsLiveData.getValue().get(i).getId());
                 Log.d(TAG, "parentId = " + mCategoryItemsLiveData.getValue().get(i).getId());
             }
@@ -84,40 +85,40 @@ public class WooCommerceRepository {
 
         mSubCategoryItemsLiveData.setValue(new ArrayList<CategoriesItem>());
         for (int i = 0; i < parentIDs.size(); i++) {
-                queries.put("parent", parentIDs.get(i) + "");
-                Call<List<CategoriesItem>> call = mIwooCommerceService.getAllCategories(queries);
-                call.enqueue(new Callback<List<CategoriesItem>>() {
-                    @Override
-                    public void onResponse(Call<List<CategoriesItem>> call, Response<List<CategoriesItem>> response) {
-                        if (response.isSuccessful()) {
-                            Log.d(TAG, "onResponse subcategories: "+response.body().size());
-                            subCategories.addAll(response.body());
-                            mSubCategoryItemsLiveData.getValue().addAll(response.body());
-                        } else {
-                            Log.d(TAG, "onResponse subcategories: is not successful ");
-                        }
+            queries.put("parent", parentIDs.get(i) + "");
+            Call<List<CategoriesItem>> call = mIwooCommerceService.getAllCategories(queries);
+            call.enqueue(new Callback<List<CategoriesItem>>() {
+                @Override
+                public void onResponse(Call<List<CategoriesItem>> call, Response<List<CategoriesItem>> response) {
+                    if (response.isSuccessful()) {
+                        Log.d(TAG, "onResponse subcategories: " + response.body().size());
+                        subCategories.addAll(response.body());
+                        mSubCategoryItemsLiveData.getValue().addAll(response.body());
+                    } else {
+                        Log.d(TAG, "onResponse subcategories: is not successful ");
                     }
+                }
 
-                    @Override
-                    public void onFailure(Call<List<CategoriesItem>> call, Throwable t) {
-                        Log.e(TAG, t.getMessage(), t);
-                    }
-                });
+                @Override
+                public void onFailure(Call<List<CategoriesItem>> call, Throwable t) {
+                    Log.e(TAG, t.getMessage(), t);
+                }
+            });
         }
 
     }
 
-    public MutableLiveData<List<Product>> fetchSearchProducts(final String searchQuery){
-        final Map <String , String > queryParameters = new HashMap<>();
+    public MutableLiveData<List<Product>> fetchSearchProducts(final String searchQuery) {
+        final Map<String, String> queryParameters = new HashMap<>();
         queryParameters.putAll(mProductQueries);
-        queryParameters.put("search" , searchQuery);
+        queryParameters.put("search", searchQuery);
         final MutableLiveData<List<Product>> searchedProductsMLiveData = new MutableLiveData<>();
-        Call<List<Product>>call = mIwooCommerceService.getLatestProducts(queryParameters);
+        Call<List<Product>> call = mIwooCommerceService.getLatestProducts(queryParameters);
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse search: "+ searchQuery);
+                    Log.d(TAG, "onResponse search: " + searchQuery);
                     List<Product> searchProducts = response.body();
                     searchedProductsMLiveData.setValue(searchProducts);
                 } else {
@@ -130,17 +131,17 @@ public class WooCommerceRepository {
                 Log.e(TAG, t.getMessage(), t);
             }
         });
-        return  searchedProductsMLiveData;
+        return searchedProductsMLiveData;
     }
 
-    public void fetchSliderProducts(){
-        Call<List<Product>> call = mIwooCommerceService.getSliderProducts(mProductQueries);
-        call.enqueue(new Callback<List<Product>>() {
+    public void fetchSliderProducts() {
+        Call<Product> call = mIwooCommerceService.getProductByID(608, mProductQueries);
+        call.enqueue(new Callback<Product>() {
             @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+            public void onResponse(Call<Product> call, Response<Product> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse sliderProducts: ");
-                    List<Product> sliderProducts = response.body();
+                    Product sliderProducts = response.body();
                     mSliderProductsLiveData.setValue(sliderProducts);
                 } else {
                     Log.d(TAG, "onResponse sliderProducts: is not successful ");
@@ -148,10 +149,11 @@ public class WooCommerceRepository {
             }
 
             @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
+            public void onFailure(Call<Product> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
             }
         });
+
     }
 
     public MutableLiveData<List<CategoriesItem>> fetchSubCategories(int parentId) {
@@ -245,7 +247,7 @@ public class WooCommerceRepository {
         fetchSpecificTypeOfProductsAsync("popularity");
         fetchSpecificTypeOfProductsAsync("rating");
         fetchAllCategories();
-        //fetchSliderProducts();
+        fetchSliderProducts();
     }
 
     public MutableLiveData<Product> fetchProductById(int id) {
@@ -316,16 +318,22 @@ public class WooCommerceRepository {
         return mSubCategoryItemsLiveData;
     }
 
-    public void fetchProductsOfCategory(int categoryID) {
-        Map <String , String > queries = new HashMap<>();
+    public MutableLiveData<List<Product>> fetchProductsOfCategory(final int categoryID) {
+        final MutableLiveData<List<Product>> productsMutableLiveDate = new MutableLiveData<>();
+        Map<String, String> queries = new HashMap<>();
         queries.putAll(mProductQueries);
-        queries.put("category" , String.valueOf(categoryID));
-        Call<List<Product>> call = mIwooCommerceService.getProductsOfCategoryById( queries);
+        queries.put("category", String.valueOf(categoryID));
+        Call<List<Product>> call = mIwooCommerceService.getProductsOfCategoryById(queries);
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                List<Product> products = response.body();
-                mProductsOfSubCategoryMLiveData.setValue(products);
+
+//                mProductsOfSubCategoryMLiveData.setValue(products);
+                if (response.isSuccessful()) {
+                    Log.d(TAG , "is successful" +"products of category "+categoryID);
+                    List<Product> products = response.body();
+                    productsMutableLiveDate.setValue(products);
+                }
             }
 
             @Override
@@ -334,9 +342,17 @@ public class WooCommerceRepository {
             }
         });
 
+        return productsMutableLiveDate;
     }
 
-    public MutableLiveData<List<Product>> getSliderProducts() {
+    public MutableLiveData<Product> getSliderProducts() {
         return mSliderProductsLiveData;
+    }
+
+    public void register(String username, String password) {
+        Map<String, String> queries = new HashMap<>();
+        queries.putAll(mProductQueries);
+        Customer user = new Customer(username, password);
+        Call<Customer> call = mIwooCommerceService.postCreateCustomer(queries, user);
     }
 }

@@ -57,12 +57,9 @@ public class ProductListFragment extends ConnectionFragment {
     }
 
     private void setObservers() {
-        mHomeViewModel.getLatestProductLiveData().observe(this, new Observer<List<Product>>() {
-            @Override
-            public void onChanged(List<Product> products) {
-                setupAdapter(products);
-                Log.d("Observer", "" + products.size());
-            }
+        mHomeViewModel.getLatestProductLiveData().observe(this, products -> {
+            setupAdapter(products);
+            Log.d("Observer", "" + products.size());
         });
 
     }
@@ -70,18 +67,7 @@ public class ProductListFragment extends ConnectionFragment {
     private void setupAdapter(List<Product> products) {
 
         if (mRecyclerAdapterProducts == null) {
-            switch (mProductListType){
-                case "latest_product":
-                    mRecyclerAdapterProducts = new RecyclerAdapter(mHomeViewModel.getLatestProductLiveData().getValue(), getContext());
-                    break;
-                case "most_visit_product":
-                    mRecyclerAdapterProducts = new RecyclerAdapter(mHomeViewModel.getBestProductsLiveData().getValue(), getContext());
-                    break;
-                case "popular_product":
-                    mRecyclerAdapterProducts = new RecyclerAdapter(mHomeViewModel.getMostPopularProductsLiveData().getValue(), getContext());
-                    break;
-            }
-
+            mRecyclerAdapterProducts = new RecyclerAdapter(products, getContext());
             mBinding.recyclerViewProducts.setAdapter(mRecyclerAdapterProducts);
         } else {
             mRecyclerAdapterProducts.setProductList(products);

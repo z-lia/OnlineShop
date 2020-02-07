@@ -14,6 +14,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlineshop.R;
+import com.example.onlineshop.databinding.ListItemProductAllBinding;
+import com.example.onlineshop.databinding.ListItemProductBinding;
 import com.example.onlineshop.databinding.ListItemProductImageBinding;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.view.HomeMainActivity;
@@ -44,10 +46,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Produc
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view ;
         //view = inflater.inflate(R.layout.list_item_product, parent, false);
-        if (mContext instanceof HomeMainActivity)
+        if (mContext instanceof HomeMainActivity) {
             view = inflater.inflate(R.layout.list_item_product, parent, false);
-        else //if (mContext instanceof ProductListActivity)
+//            ListItemProductBinding binging = DataBindingUtil.inflate(inflater, R.layout.list_item_product, parent, false);
+//           return new ProductHolder(view, binging);
+        }
+        else {//if (mContext instanceof ProductListActivity)
             view = inflater.inflate(R.layout.list_item_product_all, parent, false);
+//            ListItemProductAllBinding binding = DataBindingUtil.inflate(inflater ,R.layout.list_item_product_all, parent, false);
+//       return new ProductHolder(binding , mContext);
+        }
         return new ProductHolder(view, mContext);
     }
 
@@ -77,19 +85,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Produc
             textViewPriceOnSale = itemView.findViewById(R.id.text_view_product_price_on_sale);
             mContext = context;
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = ProductDetailActivity.newIntent(mContext, mProduct.getId());
-                    mContext.startActivity(intent);
-                }
+            itemView.setOnClickListener(v -> {
+                Intent intent = ProductDetailActivity.newIntent(mContext, mProduct.getId());
+                mContext.startActivity(intent);
             });
         }
 
         public void bind(Product product) {
             mProduct = product;
             textViewName.setText(mProduct.getName());
-            textViewPrice.setText(mProduct.getPrice());
+            textViewPrice.setText(mProduct.getRegularPrice());
             if (mProduct.isOnSale()) {
                 textViewPrice.setPaintFlags(textViewPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 textViewPriceOnSale.setText(mProduct.getSalePrice());

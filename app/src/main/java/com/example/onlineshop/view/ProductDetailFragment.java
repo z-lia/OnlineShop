@@ -56,25 +56,21 @@ public class ProductDetailFragment extends ConnectionFragment {
         //mProductDetailViewModel.setProductID(mProductID);
         mViewModel.fetchProductByID(mProductID);
 
-
-        mViewModel.getProductMutableLiveData().observe(this, new Observer<Product>() {
-            @Override
-            public void onChanged(Product product) {
-                //mViewModel.fetchProductByID(mProductID);
-                mBinding.textViewProductName.setText(mViewModel.getProductMutableLiveData().getValue().getName());
+        mViewModel.getProductMutableLiveData().observe(this, product -> {
+            //mViewModel.fetchProductByID(mProductID);
+            mBinding.textViewProductName.setText(mViewModel.getProductMutableLiveData().getValue().getName());
 //                mBinding.textViewProductName.setText(mViewModel.getProductName());
-                mBinding.textViewProductPrice.setText(mViewModel.getProductMutableLiveData().getValue().getPrice());
-                //why null ???
+            mBinding.textViewProductPrice.setText(mViewModel.getProductMutableLiveData().getValue().getPrice());
+            //why null ???
 //                mBinding.textViewProductPrice.setText(mViewModel.getProductPrice());
 //                if(mViewModel.isOnSale()){
-                if (mViewModel.getProductMutableLiveData().getValue().isOnSale()) {
+            if (mViewModel.getProductMutableLiveData().getValue().isOnSale()) {
 //                    mBinding.textViewProductPriceOnSale.setText(mViewModel.getProductMutableLiveData().getValue().getSalePrice());
-                    mBinding.textViewProductPrice.setPaintFlags(mBinding.textViewProductPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                }
-                setProductDescription();
-                setViewPagerAdapter();
-
+                mBinding.textViewProductPrice.setPaintFlags(mBinding.textViewProductPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }
+            setProductDescription();
+            setViewPagerAdapter();
+
         });
     }
 

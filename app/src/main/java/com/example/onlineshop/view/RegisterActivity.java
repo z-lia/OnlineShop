@@ -1,22 +1,29 @@
 package com.example.onlineshop.view;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-public class SearchActivity extends SingleFragmentActivity {
+import com.example.onlineshop.R;
+
+public class RegisterActivity extends SingleFragmentActivityWithToolbar {
 
     @Override
     public Fragment createFragment() {
-        return SearchFragment.newInstance();
+        return RegisterFragment.newInstance();
     }
 
     public static Intent newIntent(Context context){
-        Intent intent = new Intent(context , SearchActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent intent = new Intent(context ,RegisterActivity.class);
         return intent;
     }
 
 }
+
+
+
+
+
