@@ -17,13 +17,13 @@
         android:padding="@dimen/margin_layout"
         tools:context=".view.ProductDetailFragment">
 
-<!--        <androidx.viewpager2.widget.ViewPager2-->
-<!--            android:id="@+id/view_pager2_slider"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layoutDirection="rtl"-->
-<!--            android:orientation="vertical" />-->
+        <!--        <androidx.viewpager2.widget.ViewPager2-->
+        <!--            android:id="@+id/view_pager2_slider"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:layoutDirection="rtl"-->
+        <!--            android:orientation="vertical" />-->
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager_image_product"
@@ -31,31 +31,38 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layoutDirection="rtl" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2">
+            android:layout_weight="2"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_view_product_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:text="@string/app_name" />
             <!--        android:text="@{mViewModel.productName}"/>-->
 
             <TextView
                 android:id="@+id/text_view_product_price"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:text="Price" />
             <!--        android:text="@{mViewModel.productPrice}"/>-->
             <TextView
                 android:id="@+id/text_view_product_price_on_sale"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:text="Price2" />
             <!--        android:text="@{mViewModel.productPriceOnSale}"/>-->
             <TextView
                 android:id="@+id/text_view_product_type"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textDirection="rtl"
+                tools:text="Type" />
 
             <TextView
                 android:id="@+id/text_view_product_description"
