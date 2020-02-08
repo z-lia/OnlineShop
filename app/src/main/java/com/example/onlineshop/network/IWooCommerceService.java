@@ -38,10 +38,7 @@ public interface IWooCommerceService {
     @GET("products/")
     Call <List<Product>> getProductsOfCategoryById( @QueryMap Map<String, String> queries );
 
-    @GET("products/608")
-    Call<List<Product>> getSliderProducts(@QueryMap Map<String, String> mProductQueries);
-
     @Headers("Content-Type: application/json")
     @POST("customers/")
-    Call<Customer> postCreateCustomer(@QueryMap Map<String, String> mProductQueries , @Body Customer user);
+    Call<Customer> postCreatedCustomer(@QueryMap Map<String, String> mProductQueries , @Body Customer user);
 }

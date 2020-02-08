@@ -2,11 +2,13 @@ package com.example.onlineshop.network;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.onlineshop.model.CategoriesItem;
 import com.example.onlineshop.model.Customer;
 import com.example.onlineshop.model.Product;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,10 +24,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class WooCommerceRepository {
     private static final String BASE_URL = " https://woocommerce.maktabsharif.ir/wp-json/wc/v3/";
 
-    public static final String CONSUMER_KEY = "ck_afcde41bdfa7c7ab871bd26f950ce0101ac96c92";
-    public static final String CONSUMER_SECRET = "cs_48ed218ae80a2d28cf1b88378f66f75ead30d99a";
+    private static final String CONSUMER_KEY = "ck_afcde41bdfa7c7ab871bd26f950ce0101ac96c92";
+    private static final String CONSUMER_SECRET = "cs_48ed218ae80a2d28cf1b88378f66f75ead30d99a";
     private static final String TAG = "WooWooCommerceFetcherC";
     private static final String TAG_ONResponse = "Onresopnse";
+    private static final String DATE = "date";
+    private static final String POPULARITY = "popularity";
+    private static final String RATING = "rating";
 
     private static WooCommerceRepository sInstance;
 
@@ -36,13 +41,19 @@ public class WooCommerceRepository {
     private MutableLiveData<List<Product>> mLatestProductLiveData;
     private MutableLiveData<List<Product>> mBestProductsLiveData;
     private MutableLiveData<List<Product>> mMostPopularProductsLiveData;
+    private MutableLiveData<Product> mSliderProductsLiveData;
 
     private MutableLiveData<List<CategoriesItem>> mCategoryItemsLiveData;
     private MutableLiveData<List<CategoriesItem>> mSubCategoryItemsLiveData;
 
-    private MutableLiveData<List<Product>> mProductsOfSubCategoryMLiveData;
-    private MutableLiveData<Product> mSliderProductsLiveData;
+    private Customer mCustomer;
+    private MutableLiveData <Integer> mCustomerIsRegisterMLiveData;
+    private NetworkErrorCallBack mNetworkErrorCallBack;
 
+
+    public void setNetworkErrorCallBack(NetworkErrorCallBack networkErrorCallBack){
+         mNetworkErrorCallBack = networkErrorCallBack;
+    }
     public static WooCommerceRepository getsInstance() {
         if (sInstance == null)
             sInstance = new WooCommerceRepository();
@@ -66,6 +77,8 @@ public class WooCommerceRepository {
         mCategoryItemsLiveData = new MutableLiveData<>();
         mSubCategoryItemsLiveData = new MutableLiveData<>();
         mSliderProductsLiveData = new MutableLiveData<>();
+        mCustomerIsRegisterMLiveData = new MutableLiveData<>();
+        mCustomerIsRegisterMLiveData .setValue(-1);
     }
 
     public void fetchAllSubCategories() {
@@ -105,7 +118,6 @@ public class WooCommerceRepository {
                 }
             });
         }
-
     }
 
     public MutableLiveData<List<Product>> fetchSearchProducts(final String searchQuery) {
@@ -196,7 +208,6 @@ public class WooCommerceRepository {
                     fetchAllSubCategories();
                 } else {
                     Log.d(TAG, "onResponse categories: is not successful ");
-
                 }
             }
 
@@ -219,15 +230,15 @@ public class WooCommerceRepository {
                     Log.d(TAG, "in on response");
                     List<Product> orderedProducts = response.body();
                     switch (query) {
-                        case "date":
+                        case DATE:
                             Log.d(TAG, "in on response date");
                             mLatestProductLiveData.setValue(orderedProducts);
                             break;
-                        case "popularity":
+                        case POPULARITY:
                             Log.d(TAG, "in on response popularity");
                             mMostPopularProductsLiveData.setValue(orderedProducts);
                             break;
-                        case "rating":
+                        case RATING:
                             Log.d(TAG, "in on response rating");
                             mBestProductsLiveData.setValue(orderedProducts);
                             break;
@@ -243,9 +254,9 @@ public class WooCommerceRepository {
     }
 
     public void fetchSpecificProducts() {
-        fetchSpecificTypeOfProductsAsync("date");
-        fetchSpecificTypeOfProductsAsync("popularity");
-        fetchSpecificTypeOfProductsAsync("rating");
+        fetchSpecificTypeOfProductsAsync(DATE);
+        fetchSpecificTypeOfProductsAsync(POPULARITY);
+        fetchSpecificTypeOfProductsAsync(RATING);
         fetchAllCategories();
         fetchSliderProducts();
     }
@@ -295,8 +306,72 @@ public class WooCommerceRepository {
         };
     }
 
+    public void register(String username, String password) {
+        Map<String, String> queries = new HashMap<>();
+        queries.putAll(mProductQueries);
+        Customer user = new Customer(username, password);
+        Call<Customer> call = mIwooCommerceService.postCreatedCustomer(queries, user);
+        call.enqueue(new Callback<Customer>() {
+            @Override
+            public void onResponse(Call<Customer> call, Response<Customer> response) {
+                if (response.isSuccessful()) {
+                    mCustomer = response.body();
+                } else {
+                    if (response.code() == 400) {
+                        Log.d(TAG, "onResponse register customer: is not successful\n " + response.errorBody().toString());
+                        Gson gson = new Gson();
+                        ResponseError errorResponse = gson.fromJson(response.errorBody().charStream(), ResponseError.class);
+
+                        //mNetworkErrorCallBack.onFail(errorResponse.getMessage());
+                        mNetworkErrorCallBack.onFail(NetworkErrorHandler.getNetworkMessage(response.code()));
+//                        NetworkErrorHandler.getNetworkMessage(errorResponse.getCode())
+                        if (errorResponse.getCode() == ErrorCode.DUPLICATE_EMAIL_ID_CODE) {
+                            //DO Error Code specific handling
+                        } else {
+                            //DO GENERAL Error Code Specific handling
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Customer> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+    }
+
+    public MutableLiveData<List<Product>> fetchProductsOfCategory(final int categoryID) {
+        final MutableLiveData<List<Product>> productsMutableLiveDate = new MutableLiveData<>();
+        Map<String, String> queries = new HashMap<>();
+        queries.putAll(mProductQueries);
+        queries.put("category", String.valueOf(categoryID));
+        Call<List<Product>> call = mIwooCommerceService.getProductsOfCategoryById(queries);
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "is successful" + "products of category " + categoryID);
+                    List<Product> products = response.body();
+                    productsMutableLiveDate.setValue(products);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+
+        return productsMutableLiveDate;
+    }
+
+    public MutableLiveData<Product> getSliderProducts() {
+        return mSliderProductsLiveData;
+    }
+
     public MutableLiveData<List<Product>> getLatestProductLiveData() {
-//        fetchSpecificTypeOfProductsAsync("date");
         return mLatestProductLiveData;
     }
 
@@ -318,41 +393,8 @@ public class WooCommerceRepository {
         return mSubCategoryItemsLiveData;
     }
 
-    public MutableLiveData<List<Product>> fetchProductsOfCategory(final int categoryID) {
-        final MutableLiveData<List<Product>> productsMutableLiveDate = new MutableLiveData<>();
-        Map<String, String> queries = new HashMap<>();
-        queries.putAll(mProductQueries);
-        queries.put("category", String.valueOf(categoryID));
-        Call<List<Product>> call = mIwooCommerceService.getProductsOfCategoryById(queries);
-        call.enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
 
-//                mProductsOfSubCategoryMLiveData.setValue(products);
-                if (response.isSuccessful()) {
-                    Log.d(TAG , "is successful" +"products of category "+categoryID);
-                    List<Product> products = response.body();
-                    productsMutableLiveDate.setValue(products);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-                Log.e(TAG, t.getMessage(), t);
-            }
-        });
-
-        return productsMutableLiveDate;
-    }
-
-    public MutableLiveData<Product> getSliderProducts() {
-        return mSliderProductsLiveData;
-    }
-
-    public void register(String username, String password) {
-        Map<String, String> queries = new HashMap<>();
-        queries.putAll(mProductQueries);
-        Customer user = new Customer(username, password);
-        Call<Customer> call = mIwooCommerceService.postCreateCustomer(queries, user);
+    public interface NetworkErrorCallBack{
+        public void onFail(String errorMessage);
     }
 }

@@ -47,7 +47,6 @@ public class SplashActivity extends AppCompatActivity {
 //            }
 //        }, SPLASH_DISPLAY_LENGTH);
 
-
     }
 
     private class PreFetchDataFromServer extends AsyncTask<SplashViewModel, Void, Void> {
@@ -65,8 +64,7 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     /* Create an Intent that will start the Home-Activity. */
-                    Intent mainIntent = new Intent(SplashActivity.this, HomeMainActivity.class);
-                    SplashActivity.this.startActivity(mainIntent);
+                    SplashActivity.this.startActivity(HomeMainActivity.newIntent(SplashActivity.this));
                     finish();
                 }
             }, SPLASH_DISPLAY_LENGTH);

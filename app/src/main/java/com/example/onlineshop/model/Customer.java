@@ -9,6 +9,9 @@ public class Customer {
     @SerializedName("email")
     private String email;
 
+    @SerializedName("id")
+    private int ID;
+
     @SerializedName("username")
     private String userName;
 

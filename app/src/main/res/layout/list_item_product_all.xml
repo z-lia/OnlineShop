@@ -28,6 +28,7 @@
                 android:contentDescription="@string/imageProductDescription"
                 android:padding="8dp"
                 android:scaleType="centerCrop"
+                app:chainUseRtl="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -38,9 +39,10 @@
             <!--        app:layout_constraintEnd_toEndOf="@id/linear_layout_text"-->
             <LinearLayout
                 android:id="@+id/linear_layout_text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_margin="@dimen/margin_layout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/image_view_product"
@@ -54,16 +56,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:ellipsize="end"
-                    android:maxLines="3"
+                    android:maxLines="4"
                     android:padding="4dp"
                     tools:text="@tools:sample/lorem/random" />
 
                 <TextView
                     android:id="@+id/text_view_product_description"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:backgroundTint="@color/colorLightGreen" />

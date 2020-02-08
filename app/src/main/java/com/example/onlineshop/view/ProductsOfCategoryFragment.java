@@ -25,7 +25,7 @@ import com.example.onlineshop.viewmodel.CategoriesViewModel;
 
 import java.util.List;
 
-public class ProductCategoriesFragment extends ConnectionFragment {
+public class ProductsOfCategoryFragment extends ConnectionFragment {
 
     private static final String ARGS_CATEGORY_ID = "category id";
     private static final String ARGS_CATEGORY_NAME = "category name";
@@ -37,16 +37,16 @@ public class ProductCategoriesFragment extends ConnectionFragment {
     private MutableLiveData<List<Product>> mProductsLiveData = new MutableLiveData<>();
     private RecyclerAdapter mRecyclerAdapterProducts;
 
-    public static ProductCategoriesFragment newInstance(int categoryId , String categoryName) {
+    public static ProductsOfCategoryFragment newInstance(int categoryId , String categoryName) {
         
         Bundle args = new Bundle();
         args.putInt(ARGS_CATEGORY_ID , categoryId);
         args.putString(ARGS_CATEGORY_NAME , categoryName);
-        ProductCategoriesFragment fragment = new ProductCategoriesFragment();
+        ProductsOfCategoryFragment fragment = new ProductsOfCategoryFragment();
         fragment.setArguments(args);
         return fragment;
     }
-    public ProductCategoriesFragment() {
+    public ProductsOfCategoryFragment() {
         // Required empty public constructor
     }
 
@@ -105,7 +105,7 @@ public class ProductCategoriesFragment extends ConnectionFragment {
             super.onPostExecute(aVoid);
             mBinding.progressbar.setIndeterminate(false);
             mBinding.progressbar.setVisibility(View.GONE);
-            mProductsLiveData.observe(ProductCategoriesFragment.this, new Observer<List<Product>>() {
+            mProductsLiveData.observe(ProductsOfCategoryFragment.this, new Observer<List<Product>>() {
                 @Override
                 public void onChanged(List<Product> products) {
                     setAdapter(products);

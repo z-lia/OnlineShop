@@ -33,12 +33,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryHolder
     public CategoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             ListItemCategoryBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext),
                     R.layout.list_item_category, parent, false);
-            return new CategoryHolder(binding);
-//        else //mContext instanceof CategoryActivity
-//        {
-//            ListItemCategoryFragmentBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.list_item_category_fragment, parent, false);
-//            return new CategoryHolderInCategoryFragment(binding);
-//        }
+            return new CategoryHolder(binding , mContext);
     }
 
     @Override

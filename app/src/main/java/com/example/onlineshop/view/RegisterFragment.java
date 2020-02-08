@@ -14,12 +14,13 @@ import android.view.ViewGroup;
 
 import com.example.onlineshop.R;
 import com.example.onlineshop.databinding.FragmentRegisterBinding;
+import com.example.onlineshop.network.WooCommerceRepository;
 import com.example.onlineshop.viewmodel.UserViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends ConnectionFragment  {
 
     private FragmentRegisterBinding mBinding;
     private UserViewModel mUserViewModel;

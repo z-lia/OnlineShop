@@ -15,7 +15,7 @@ public class ProductsOfCategoryActivity extends SingleFragmentActivity {
     public Fragment createFragment() {
         mCategoryId = getIntent().getIntExtra(EXTRA_CATEGORY_ID, 0);
         mCategoryName = getIntent().getStringExtra(EXTRA_CATEGORY_NAME);
-        return ProductCategoriesFragment.newInstance(mCategoryId , mCategoryName);
+        return ProductsOfCategoryFragment.newInstance(mCategoryId , mCategoryName);
     }
 
     public static Intent newIntent(Context context , int categoryId , String categoryName){

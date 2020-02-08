@@ -1,5 +1,7 @@
 package com.example.onlineshop.view;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +22,9 @@ import com.google.android.material.navigation.NavigationView;
 public class HomeMainActivity extends SingleFragmentActivity {
     private ActivityMainBinding mBinding;
 
+    public static Intent newIntent(Context context){
+        return new Intent(context ,HomeMainActivity.class );
+    }
     @Override
     public Fragment createFragment() {
         return HomeFragment.newInstance();
